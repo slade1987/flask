@@ -11,9 +11,15 @@ USERS = {
 }
 
 
+ATICLES = {
+    1: {'text': 'asd', 'author': 1},
+    2: {'text1': 'asds', 'author': 2},
+}
+
+
 @user.route('/')
 def user_list():
-    return render_template('users/list.html', users=USERS, )
+    return render_template('users/list.html', users=USERS, artic=ATICLES, )
 
 
 @user.route('/<int:pk>')
@@ -22,4 +28,4 @@ def get_user(pk: int):
         user_name = USERS[pk]
     except KeyError:
         raise NotFound(f'User id {pk} not found')
-    return render_template('users/details.html', user_name=user_name, )
+    return render_template('users/details.html', user_name=user_name,)
