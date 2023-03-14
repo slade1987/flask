@@ -7,12 +7,17 @@ User list
 {% block body %}
     <div class="row">
         <div class="col">
-            <h1>Users</h1>
-            {% for user_id in users %}
+            <h1> Произведения </h1>
+            {% for aticle in aticles  %}
             <ul>
-                <li><a href="{{ url_for('user.get_user', pk=user_id,)}}"> {{ users[user_id] }}</a></li>
+                <li><a href="{{url_for('hw.get_user', pk=aticles[aticle]['author'])}}"> {{ aticle, aticles[aticle]['text'], authors[aticles[aticle]['author']] }} </a></li>
             </ul>
             {% endfor %}
         </div>
     </div>
+
 {% endblock %}
+
+<!--
+ <li><a href="{{ url_for('user.get_user', pk=user_id,)}}"> {{ users[user_id] }}</a></li>
+-->

@@ -1,6 +1,7 @@
 from flask import Flask
 from blog.user.views import user
 from blog.report.views import report
+from blog.hw.views import hw
 
 # app = Flask(__name__)
 #
@@ -22,3 +23,4 @@ def create_app() -> Flask:
 def register_blueprint(app: Flask):
     app.register_blueprint(user)
     app.register_blueprint(report)
+    app.register_blueprint(hw)

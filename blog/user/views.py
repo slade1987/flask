@@ -3,7 +3,6 @@ from werkzeug.exceptions import NotFound
 
 user = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
-# USERS = ['Alise', 'Jon', 'Mike']
 USERS = {
     1: 'Alice',
     2: 'Jon',
@@ -11,15 +10,9 @@ USERS = {
 }
 
 
-ATICLES = {
-    1: {'text': 'asd', 'author': 1},
-    2: {'text1': 'asds', 'author': 2},
-}
-
-
 @user.route('/')
 def user_list():
-    return render_template('users/list.html', users=USERS, artic=ATICLES, )
+    return render_template('users/list.html', users=USERS, )
 
 
 @user.route('/<int:pk>')
