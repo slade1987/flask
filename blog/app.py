@@ -1,21 +1,15 @@
 from flask import Flask
-from blog.user.views import user
-from blog.report.views import report
+from flask_sqlalchemy import SQLAlchemy
 from blog.hw.views import hw
+from blog.report.views import report
+from blog.user.views import user
 
-# app = Flask(__name__)
-#
-# @app.route("/")
-# def index():
-#     return "Hello!"
-#
-#
-# @app.route("/greet/<name>/")
-# def greet_name(name: str):
-#     return f"Hello {name}!"
 
 def create_app() -> Flask:
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = '111222333'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlit4e:///db.sqlite'
+
     register_blueprint(app)
     return app
 
