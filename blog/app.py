@@ -1,44 +1,37 @@
 from flask import Flask, redirect, url_for
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
+from blog import commands
+from blog.extensions import db, login_manager
+from blog.models import User
 
-db = SQLAlchemy()
-
-login_manager = LoginManager()
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '111222333'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config.from_object('blog.config')
 
+    register_extensions(app)
+    register_blueprints(app)
+    register_commands(app)
+    return app
+
+
+def register_extensions(app):
     db.init_app(app)
-
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
-    from .models import User
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    @login_manager.unauthorized_handler
-    def unauthorized():
-        return redirect(url_for("auth.login"))
 
-    register_blueprint(app)
-    return app
-
-
-def register_blueprint(app: Flask):
+def register_blueprints(app: Flask):
     from blog.auth.views import auth
-    from blog.hw.views import hw
-    from blog.report.views import report
     from blog.user.views import user
 
     app.register_blueprint(user)
-    app.register_blueprint(report)
-    app.register_blueprint(hw)
     app.register_blueprint(auth)
 
+
+def register_commands(app: Flask):
+    app.cli.add_command(commands.init_db)
+    app.cli.add_command(commands.create_init_user)
