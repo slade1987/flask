@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY freez  freez
 
-RUN pip install --no-cache -r freez
+RUN pip install --no-cache --user -r freez
 
 COPY . .
 
